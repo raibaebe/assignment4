@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager - Home</title>
+</head>
+<body>
+    <header>
+        <h1>Task Manager</h1>
+        <nav>
+            <a href="/login">Login</a> |
+            <a href="/register">Register</a> |
+            <a href="/tasks/new">Create Task</a> |
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Tasks</h2>
+
+        <!-- Filter by status (Pending or Completed) -->
+        <form method="GET" action="/tasks">
+            <label for="status">Filter by Status: </label>
+            <select name="status" id="status">
+                <option value="pending" <%= status === 'pending' ? 'selected' : '' %>>Pending</option>
+                <option value="completed" <%= status === 'completed' ? 'selected' : '' %>>Completed</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- Task List -->
+        <div>
+            <% if (tasks.length === 0) { %>
+                <p>No tasks found.</p>
+            <% } else { %>
+                <ul>
+                    <% tasks.forEach(task => { %>
+                        <li>
+                            <h3><%= task.title %></h3>
+                            <p><%= task.description %></p>
+                            <p>Status: <%= task.status %></p>
+                            <p>Created at: <%= task.createdAt.toDateString() %></p>
+                            <a href="/tasks/<%= task._id %>">Edit</a> | 
+                            <a href="/tasks/delete/<%= task._id %>">Delete</a>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </div>
+    </section>
+</body>
+</html>
