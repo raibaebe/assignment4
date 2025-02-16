@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const Task = require('./models/taskModel');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
+
 dotenv.config();
 const app = express();
 
