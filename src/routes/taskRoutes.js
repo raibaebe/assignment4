@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const Task = require('../models/taskModel');
-const authenticate = require('../middleware/authenticate');
 
-router.get('/tasks/new', authenticate, (req, res) => {
+// Render the task creation page
+router.get('/tasks/new', (req, res) => {
     res.render('createTask');
 });
 
-router.post('/tasks', authenticate, async (req, res) => {
+// Create a new task (POST request)
+router.post('/tasks', async (req, res) => {
     const { title, description, status } = req.body;
     const newTask = new Task({
         title,
         description,
         status,
-        userId: req.user.userId
+        userId: 'dummyUserId' // Just for testing, replace later
     });
 
     try {
@@ -24,9 +25,10 @@ router.post('/tasks', authenticate, async (req, res) => {
     }
 });
 
-router.get('/tasks', authenticate, async (req, res) => {
+// Get all tasks with optional status filter
+router.get('/tasks', async (req, res) => {
     const { status } = req.query;
-    const filter = { userId: req.user.userId };
+    const filter = {};
     if (status) filter.status = status;
 
     try {
@@ -37,7 +39,8 @@ router.get('/tasks', authenticate, async (req, res) => {
     }
 });
 
-router.get('/tasks/:id', authenticate, async (req, res) => {
+// Edit task page
+router.get('/tasks/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const task = await Task.findById(id);
@@ -47,7 +50,8 @@ router.get('/tasks/:id', authenticate, async (req, res) => {
     }
 });
 
-router.post('/tasks/:id', authenticate, async (req, res) => {
+// Update task
+router.post('/tasks/:id', async (req, res) => {
     const { id } = req.params;
     const { title, description, status } = req.body;
 
@@ -59,7 +63,8 @@ router.post('/tasks/:id', authenticate, async (req, res) => {
     }
 });
 
-router.get('/tasks/delete/:id', authenticate, async (req, res) => {
+// Delete task
+router.get('/tasks/delete/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
