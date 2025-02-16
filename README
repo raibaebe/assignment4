@@ -1,0 +1,39 @@
+Task Manager Application - Setup & Run Guide
+
+This guide explains how to set up and run the Task Manager application locally.
+
+Prerequisites
+
+Node.js installed
+
+MongoDB installed and running locally
+
+Installation & Setup
+
+1. Clone the repository
+
+git clone https://github.com/raibaebe/assignment4.git
+cd assignment4
+
+2. Install dependencies
+
+npm install
+
+3. Create a .env file in the root directory
+
+MONGO_URI=mongodb://localhost:27017/taskmanager
+JWT_SECRET=your_jwt_secret_key
+
+4. Run MongoDB Server
+
+Ensure MongoDB is running locally:
+
+mongod
+
+5. Start the Application
+
+npm start
+
+The app will run on http://localhost:5000
+
+LIVE on RENDER:
